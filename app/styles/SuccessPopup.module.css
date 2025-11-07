@@ -1,0 +1,55 @@
+/*
+ * styles/SuccessPopup.module.css
+ * Estilos focados apenas no card de sucesso.
+ */
+
+.successPopup {
+  background-color: #ffffff;
+  padding: 35px 65px;
+  border-radius: 12px;
+  
+  /* A sombra que dá o efeito "pop" */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  max-width: 450px; /* Largura máxima do card */
+  width: 100%;
+  color: #333; /* Cor do texto */
+  font-size: 1rem;
+  line-height: 1.5;
+  font-weight: 300;
+  
+  /* (Opcional) Adiciona uma animação de "fade-in" */
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* Estilo para o botão "Voltar" dentro do pop-up */
+.backButton {
+  display: inline-block;
+  margin-top: 30px; /* Espaço entre a mensagem e o botão */
+  padding: 12px 25px;
+  
+  background: linear-gradient(to right, #d4b483, #cea97c);
+  color: #ffffff;
+  
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.backButton:hover {
+  background-color: #a0815b; /* Tom mais escuro */
+  transform: translateY(-2px); /* Efeito sutil ao passar o mouse */
+}
+
+/* Animação opcional de fade-in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

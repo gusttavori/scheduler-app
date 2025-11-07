@@ -1,0 +1,67 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  width: 100%;
+  padding: 2rem;
+  
+  /* * 'gap' controla o espaço ENTRE os itens (logo, card, footer)
+   * É a melhor forma de espaçar em um container flex.
+   */
+  gap: 2rem;
+  box-sizing: border-box; /* Garante que o padding não "empurre" o layout */
+}
+
+/* Card */
+.welcomeCard {
+  background: #fff;
+  padding: 2.5rem 2rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+  /* A margem inferior foi removida, pois o 'gap' do container cuida disso */
+}
+
+/* Texto */
+.welcomeText {
+  font-size: 1.1rem;
+  color: #3f3f3f;
+  line-height: 1.6;
+  margin-bottom: 2rem; /* Esta margem interna do card está correta */
+}
+
+/* Botão */
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: linear-gradient(to right, #d4b483, #cea97c);
+  color: #fff;
+  padding: 0.9rem 2.2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ctaButton:hover {
+  background-color: #caa88c;
+  transform: scale(1.03);
+}
+
+/* Footer */
+.footer {
+  /* A margem superior foi removida, pois o 'gap' do container cuida disso */
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

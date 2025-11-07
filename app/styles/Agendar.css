@@ -1,0 +1,144 @@
+.agendar-container {
+  min-height: 100dvh; 
+  background-image: radial-gradient(#e6d9c4 0.5px, transparent 0.5px);
+  background-size: 20px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* (Novo) Alinha tudo ao topo */
+  overflow: hidden;
+  font-family: "Poppins", sans-serif;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.titulo {
+  font-family: "Playfair Display", serif;
+  font-size: 2.2rem;
+  color: #6b4e2c;
+  margin-bottom: 0.3rem; /* Margem original restaurada */
+  text-align: center;
+  padding-top: 2rem; /* Adiciona um respiro no topo */
+}
+
+.subtitulo {
+  color: #8b7355;
+  font-size: 1rem;
+  margin-bottom: 2rem; /* Margem original restaurada */
+  text-align: center;
+}
+
+.agendar-form {
+  background: #ffffffd8;
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-bottom: 4rem; /* Adiciona espaço no final antes de rolar */
+}
+
+.agendar-form label {
+  display: block; 
+  color: #6b4e2c;
+  font-size: 0.9rem; 
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.agendar-form input,
+.agendar-form select {
+  width: 100%; 
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem; 
+  font-family: "Poppins", sans-serif; 
+  background-color: #f7f6f4;
+  margin-bottom: 1rem;
+  transition: border 0.2s, box-shadow 0.2s;
+  box-sizing: border-box; 
+}
+
+.agendar-form input:focus,
+.agendar-form select:focus {
+  outline: none;
+  border-color: #d4b483;
+  box-shadow: 0 0 0 2px #f1e4cf;
+}
+
+.agendar-form button {
+  background: linear-gradient(to right, #d4b483, #cea97c);
+  color: white;
+  font-weight: 500;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 1rem; 
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.agendar-form button:hover {
+  background: linear-gradient(to right, #c9a974, #c29d6c);
+  transform: scale(1.02);
+}
+
+.agendar-form button:disabled {
+  background: #e1d3b7;
+  cursor: not-allowed;
+  transform: none; 
+}
+
+.erro {
+  background-color: #ffeaea;
+  color: #b71c1c;
+  border-left: 4px solid #e57373;
+  padding: 12px; 
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+/* Responsivo */
+@media (max-width: 500px) {
+  .agendar-form {
+    padding: 1.5rem;
+  }
+  .titulo {
+    font-size: 1.8rem;
+    padding-top: 1rem;
+  }
+}
+
+/* --- CÓDIGO DO POP-UP FLUTUANTE (não mexe no layout) --- */
+
+.successToast {
+  position: fixed; 
+  bottom: 30px; 
+  left: 50%; 
+  transform: translateX(-50%); 
+  background-color: #ffffff;
+  padding: 16px 25px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  color: #333;
+  font-size: 1rem;
+  font-weight: 500;
+  z-index: 1000; 
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}

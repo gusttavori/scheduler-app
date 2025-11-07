@@ -1,0 +1,12 @@
+/*
+ * styles/SucessoPage.module.css
+ * CSS apenas para o container da página de sucesso.
+ */
+
+.pageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}

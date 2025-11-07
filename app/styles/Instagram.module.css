@@ -1,0 +1,31 @@
+.instaLink {
+  position: fixed;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem; /* 👈 Espaço entre o ícone e os textos */
+  bottom: 16px;
+  right: 16px;
+  background-color: white;
+  color: #ac9579;
+  padding: 12px 18px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.instaLink:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.icon {
+  stroke-width: 2px;
+}
+
+.instaLink strong {
+  margin-left: 4px; /* 👈 Pequeno espaço entre "Siga no Instagram:" e o @ */
+  font-weight: 600;
+}
