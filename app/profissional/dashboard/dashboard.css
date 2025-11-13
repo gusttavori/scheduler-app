@@ -1,0 +1,532 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
+
+/* ======= Variáveis Globais (Facilita a manutenção) ======= */
+:root {
+  --font-sans: "Montserrat", "Inter", "Segoe UI", sans-serif;
+  
+  --color-bg: #f9f9f9;           /* Fundo principal (cinza bem claro) */
+  --color-surface: #fff;          /* Fundo dos cartões, header (branco) */
+  
+  --color-sidebar: #111;          /* Sidebar (preto suave) */
+  --color-sidebar-text: #fff;  /* Texto da sidebar */
+  --color-sidebar-active: #333; /* Item ativo da sidebar */
+
+  /* Paleta de cores para Status */
+  --color-confirmado: #16a34a;  /* Verde */
+  --color-pendente: #eab308;    /* Amarelo/Âmbar */
+  --color-cancelado: #dc2626;   /* Vermelho */
+  
+  --color-text-primary: #111;   /* Texto principal (preto) */
+  --color-text-secondary: #555; /* Texto secundário (cinza escuro) */
+  --color-text-muted: #777;     /* Texto sutil (cinza) */
+
+  --border-color: #e5e5e5;       /* Cor da borda (cinza claro) */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);  /* Sombra sutil */
+  --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.08); /* Sombra de hover */
+}
+
+/* ======= Reset e Tipografia Base ======= */
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ======= Layout geral ======= */
+.dashboard-container {
+  background: var(--color-bg);
+  font-family: var(--font-sans);
+  display: flex;
+  min-height: 100vh; /* ATUALIZADO (para mobile) */
+  width: 100vw;
+  overflow: hidden;
+}
+
+.sidebar {
+  background-color: var(--color-sidebar);
+  color: var(--color-sidebar-text);
+  padding: 24px;
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid var(--color-sidebar);
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+.logo {
+  margin-top: 40px; 
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: -1px;
+  cursor: pointer;
+  max-width: 100%;
+  height: auto;
+}
+
+.sidebar nav ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.sidebar nav li {
+  display: flex;
+  align-items: center;
+  /* Alinhado à esquerda */
+  gap: 12px;
+  padding: 14px 12px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.2s;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.sidebar nav li:hover {
+  background-color: var(--color-sidebar-active);
+}
+
+.sidebar nav li.active {
+  background-color: var(--color-sidebar-active);
+  font-weight: 600;
+}
+
+.logout-button {
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #581c1c;
+}
+
+/* ======= Rodapé da Sidebar ======= */
+.sidebar-footer {
+  text-align: center;
+}
+.sidebar-avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: #555;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin: 0 auto;
+  transition: opacity 0.2s;
+}
+.sidebar-avatar:hover {
+  opacity: 0.8;
+}
+
+/* ======= Conteúdo (Direita) ======= */
+.dashboard-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ======= Cabeçalho ======= */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--color-surface);
+  color: #000;
+  padding: 16px 32px;
+  border-bottom: 1px solid var(--border-color);
+}
+.header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+.header .user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--color-text-primary);
+}
+.avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* ======= Conteúdo principal ======= */
+.main-content {
+  padding: 32px;
+  overflow-y: auto;
+  flex: 1;
+  color: var(--color-text-primary);
+}
+.main-content::-webkit-scrollbar {
+  width: 6px;
+}
+.main-content::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+.main-content::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 6px;
+}
+.main-content::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa;
+}
+.main-content h1 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 32px;
+}
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.section-header h2 {
+  margin: 0;
+  font-weight: 600;
+  font-size: 20px;
+}
+.date-input {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--color-surface);
+  transition: all 0.2s;
+  outline: none;
+}
+.date-input:focus {
+  border-color: var(--color-text-primary);
+  box-shadow: 0 0 0 1px var(--color-text-primary);
+}
+.appointments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ======= Cards ======= */
+.appointment-card {
+  background: var(--color-surface);
+  max-width: 450px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px 24px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease-out;
+}
+.appointment-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.appointment-card div {
+  flex: 1;
+}
+.appointment-card h4 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+.appointment-card p {
+  margin: 4px 0 8px 0;
+  color: var(--color-text-secondary);
+}
+.date {
+  color: var(--color-text-muted);
+  font-size: 14px;
+}
+
+/* ======= BADGES DE STATUS (COM CORES) ======= */
+.status-badge {
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: white;
+}
+.status-confirmado {
+  background-color: var(--color-confirmado);
+  color: #fff;
+}
+.status-pendente {
+  background-color: var(--color-pendente);
+  color: #fff;
+}
+.status-cancelado {
+  background-color: var(--color-cancelado);
+  color: #fff;
+}
+
+/* ======= ESTILOS DO BOTÃO WHATSAPP (COM TEXTO) ======= */
+.card-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+.whatsapp-button {
+  width: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: 6px;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--border-color);
+  color: var(--color-text-primary);
+  background-color: var(--color-surface);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.whatsapp-button:hover {
+  background-color: var(--color-text-primary);
+  color: var(--color-surface);
+  border-color: var(--color-text-primary);
+}
+
+/* ======== BOTÃO DE NOTIFICAÇÃO (Sino) ======== */
+
+/* O <li> que segura o botão de notificação */
+.notification-item {
+  /* Remove o padding para o botão preencher */
+  padding: 0 !important; 
+  /* O <li> ainda tem o hover, pois o botão o preenche */
+  cursor: pointer;
+}
+.notification-item:hover {
+  background-color: var(--color-sidebar-active) !important;
+}
+
+/* O botão (sino) em si */
+.notification-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  
+  /* Faz o <button> se parecer com o <li> e preenchê-lo */
+  display: flex;
+  align-items: center;
+  gap: 12px;           /* Pega o gap do <li> */
+    padding-top: 14px;
+    padding-right: 0;
+    padding-bottom: 14px;
+    padding-left: 12px;  
+  /* Estilos de fonte/cor */
+  color: var(--color-sidebar-text); 
+  font-family: var(--font-sans); /* Garante a fonte correta */
+  font-size: 1em; /* Garante o tamanho do texto */
+  font-weight: 400; /* Peso normal, <li> ativa terá 600 */
+}
+
+/* O botão fica transparente no hover (o <li> cuida do fundo) */
+.notification-button:hover {
+   background-color: transparent;
+}
+
+
+/* Cor do sino quando desabilitado */
+.notification-button:disabled {
+  color: var(--color-sidebar-active); /* Cinza escuro, igual ao hover */
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+
+/* ======= NOVO: MODAL DE AVISO PERSONALIZADO ======= */
+.custom-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  font-family: var(--font-sans);
+}
+
+.custom-modal-content {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 320px;
+  text-align: center;
+}
+
+.custom-modal-content p {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.custom-modal-button {
+  background-color: var(--color-sidebar); /* Botão preto */
+  color: var(--color-sidebar-text); /* Texto branco */
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  width: 100%; /* Botão ocupa a largura total */
+}
+
+.custom-modal-button:hover {
+  opacity: 0.8;
+}
+/* ======= FIM DO MODAL ======= */
+
+
+/* ======= Rodapé do Conteúdo ======= */
+.main-footer {
+  padding: 16px 32px;
+  text-align: right;
+  font-size: 14px;
+  color: var(--color-text-muted);
+  background: var(--color-bg);
+  border-top: 1px solid var(--border-color);
+}
+
+/* ======= Responsivo ======= */
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    flex-direction: row;
+    justify-content: space-between; /* ATUALIZADO */
+    align-items: center;
+    width: 100%;
+    padding: 10px 16px; /* Ajustado */
+    box-sizing: border-box;
+  }
+
+  .sidebar nav {
+    /* Removido o flex: 1 para o nav não se esticar */
+  }
+
+  .sidebar nav ul {
+    display: flex;
+    gap: 16px; /* Ajustado */
+    margin-top: 0;
+    align-items: center;
+  }
+
+  .sidebar nav li {
+    justify-content: center;
+    padding: 10px;
+    gap: 0; /* Remove o gap no mobile */
+  }
+
+  /* Esconde o texto, mostra só o ícone */
+  .sidebar nav li span {
+    display: none;
+  }
+  
+  /* Esconde o <span> DENTRO do botão de notificação */
+  .notification-button span {
+    display: none;
+  }
+
+  /* Faz o sino (que não é um react-icon) se alinhar */
+  .notification-item .notification-button {
+     font-size: 1.25em; /* Aumenta um pouco para bater com o react-icons */
+     
+     /* Reseta o padding no mobile para centralizar o ícone */
+     padding: 10px;
+     gap: 0;
+     width: auto; /* Deixa o botão ter o tamanho do ícone */
+  }
+
+  .logo {
+    margin: 0;
+    width: 140px; /* Um pouco menor */
+    order: -1;
+  }
+
+  .sidebar-footer {
+    margin-top: 0;
+  }
+
+  .main-content {
+    padding: 24px;
+  }
+
+  .header {
+    padding: 16px 24px;
+    display: none;
+  }
+
+  .main-content h1 {
+    font-size: 20px;
+    margin-bottom: 24px;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .section-header h2 {
+    font-size: 18px;
+  }
+
+  .appointment-card {
+    padding: 16px;
+    align-items: flex-start;
+  }
+
+  .card-actions {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+  }
+
+  .status-badge {
+    margin-left: 0;
+  }
+
+  .whatsapp-button {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border-radius: 50%;
+  }
+
+  .whatsapp-button span {
+    display: none;
+  }
+
+  .main-footer {
+    position: static;
+    text-align: center;
+    padding: 16px 24px;
+  }
+}

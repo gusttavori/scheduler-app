@@ -1,3 +1,15 @@
+/* Importa a fonte Montserrat */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
+
+/* Wrapper para garantir que o rodapé fique no fim da página */
+.pageWrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 95vh;
+  font-family: "Montserrat", sans-serif;
+}
+
+/* Container principal (SEU NOVO CÓDIGO) */
 .container {
   display: flex;
   flex-direction: column;
@@ -7,15 +19,23 @@
   overflow: hidden;
   width: 100%;
   padding: 2rem;
-  
-  /* * 'gap' controla o espaço ENTRE os itens (logo, card, footer)
-   * É a melhor forma de espaçar em um container flex.
-   */
+
+  /* 'gap' controla o espaço ENTRE os itens (logo, card, footer) */
   gap: 2rem;
   box-sizing: border-box; /* Garante que o padding não "empurre" o layout */
+
+  /* Adicionado para centralizar no wrapper */
+  flex: 1;
 }
 
-/* Card */
+/* Estilo do Logo (Mantido) */
+.logo {
+  /* O 'gap' do .container já cuida do espaçamento */
+  width: 260px;
+  height: auto;
+}
+
+/* Card (SEU NOVO CÓDIGO) */
 .welcomeCard {
   background: #fff;
   padding: 2.5rem 2rem;
@@ -24,18 +44,18 @@
   max-width: 420px;
   width: 90%;
   text-align: center;
-  /* A margem inferior foi removida, pois o 'gap' do container cuida disso */
 }
 
-/* Texto */
+/* Texto (SEU NOVO CÓDIGO) */
 .welcomeText {
   font-size: 1.1rem;
   color: #3f3f3f;
   line-height: 1.6;
-  margin-bottom: 2rem; /* Esta margem interna do card está correta */
+  margin-top: 0; /* Reset */
+  margin-bottom: 2rem;
 }
 
-/* Botão */
+/* Botão (SEU NOVO CÓDIGO) */
 .ctaButton {
   display: inline-flex;
   align-items: center;
@@ -53,15 +73,36 @@
 }
 
 .ctaButton:hover {
-  background-color: #caa88c;
+  /* Ajustei para usar o gradiente escurecido, fica mais suave */
+  background: linear-gradient(to right, #cea97c, #c09b6b);
   transform: scale(1.03);
 }
 
-/* Footer */
+/* Estilo do Ícone (Mantido) */
+.icon {
+  margin-top: -2px;
+}
+
+/* Footer (SEU NOVO CÓDIGO) */
 .footer {
-  /* A margem superior foi removida, pois o 'gap' do container cuida disso */
   text-align: center;
   display: flex;
   justify-content: center;
   width: 100%;
+}
+
+/* Estilo do Link de Admin (Mantido) */
+.adminLink {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 25px;
+  gap: 6px;
+  font-size: 14px;
+  color: #aaa; /* Cor sutil */
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.adminLink:hover {
+  color: #111; /* Fica escuro no hover */
 }

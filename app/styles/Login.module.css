@@ -1,0 +1,132 @@
+/* Importa a fonte Montserrat */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
+
+.loginContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  font-family: "Montserrat", sans-serif;
+  box-sizing: border-box;
+}
+
+.logoContainer {
+  margin-bottom: 2.5rem;
+}
+
+.logo {
+  width: 260px;
+  height: auto;
+}
+
+.loginCard {
+  background: #fff;
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+}
+
+.loginCard h2 {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #111;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 2rem;
+}
+
+.inputWrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.inputIcon {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+  color: #aaa;
+}
+
+.inputField {
+  width: 100%;
+  padding: 14px 16px 14px 44px; /* Espaço para o ícone */
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  box-sizing: border-box; /* Garante que o padding não estoure */
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.inputField:focus {
+  outline: none;
+  border-color: #cea97c;
+  box-shadow: 0 0 0 3px rgba(206, 169, 124, 0.2);
+}
+
+.errorText {
+  color: #dc2626; /* Vermelho */
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  margin-top: -0.5rem;
+}
+
+/* Botão (Estilo do Home.module.css) */
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 100%; /* Botão ocupa 100% do card */
+  background: linear-gradient(to right, #d4b483, #cea97c);
+  color: #fff;
+  padding: 0.9rem 2.2rem;
+  border: none; /* Remove borda padrão de botão */
+  border-radius: 12px;
+  font-weight: 600;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.ctaButton:hover {
+  background: linear-gradient(to right, #cea97c, #c09b6b);
+  transform: scale(1.02);
+}
+
+.ctaButton:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.backLinkContainer {
+  margin-top: 2rem;
+}
+
+.backLink {
+  font-size: 0.9rem;
+  color: #aaa;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.backLink:hover {
+  color: #111;
+}
