@@ -173,16 +173,54 @@ body {
   font-size: 20px;
 }
 .date-input {
-  padding: 8px 12px;
+  /* Tamanho e Espaçamento */
+  padding: 10px 16px;
+  height: 42px; /* Altura fixa para alinhar bem */
+  
+  /* Bordas e Cores */
   border: 1px solid var(--border-color);
-  border-radius: 6px;
-  background: var(--color-surface);
-  transition: all 0.2s;
+  border-radius: 8px;
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  
+  /* Tipografia */
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  
+  /* Comportamento */
   outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
 }
+
+/* Efeito Hover (passar o mouse) */
+.date-input:hover {
+  border-color: #999;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px); /* Leve subida elegante */
+}
+
+/* Efeito Focus (clicado) */
 .date-input:focus {
   border-color: var(--color-text-primary);
-  box-shadow: 0 0 0 1px var(--color-text-primary);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1); /* Anel de foco suave */
+}
+
+/* === Customização do ícone interno do calendário (Chrome/Edge/Safari) === */
+.date-input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.6;        /* Ícone cinza por padrão */
+  padding: 4px;        /* Área de clique maior */
+  margin-left: 12px;
+  transition: all 0.2s;
+  border-radius: 4px;
+}
+
+.date-input::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;          /* Ícone preto no hover */
+  background-color: rgba(0, 0, 0, 0.05); /* Fundo sutil */
 }
 .appointments-list {
   display: flex;
