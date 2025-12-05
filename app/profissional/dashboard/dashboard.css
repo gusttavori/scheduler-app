@@ -1,28 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
 
-/* ======= Variáveis Globais (Facilita a manutenção) ======= */
+/* ======= Variáveis Globais ======= */
 :root {
   --font-sans: "Montserrat", "Inter", "Segoe UI", sans-serif;
   
-  --color-bg: #f9f9f9;           /* Fundo principal (cinza bem claro) */
-  --color-surface: #fff;          /* Fundo dos cartões, header (branco) */
+  --color-bg: #f9f9f9;
+  --color-surface: #fff;
   
-  --color-sidebar: #111;          /* Sidebar (preto suave) */
-  --color-sidebar-text: #fff;  /* Texto da sidebar */
-  --color-sidebar-active: #333; /* Item ativo da sidebar */
+  --color-sidebar: #111;
+  --color-sidebar-text: #fff;
+  --color-sidebar-active: #333;
 
   /* Paleta de cores para Status */
-  --color-confirmado: #16a34a;  /* Verde */
-  --color-pendente: #eab308;    /* Amarelo/Âmbar */
-  --color-cancelado: #dc2626;   /* Vermelho */
+  --color-confirmado: #16a34a;
+  --color-pendente: #eab308;
+  --color-cancelado: #dc2626;
   
-  --color-text-primary: #111;   /* Texto principal (preto) */
-  --color-text-secondary: #555; /* Texto secundário (cinza escuro) */
-  --color-text-muted: #777;     /* Texto sutil (cinza) */
+  --color-text-primary: #111;
+  --color-text-secondary: #555;
+  --color-text-muted: #777;
 
-  --border-color: #e5e5e5;       /* Cor da borda (cinza claro) */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);  /* Sombra sutil */
-  --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.08); /* Sombra de hover */
+  --border-color: #e5e5e5;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.08);
 }
 
 /* ======= Reset e Tipografia Base ======= */
@@ -38,7 +38,7 @@ body {
   background: var(--color-bg);
   font-family: var(--font-sans);
   display: flex;
-  min-height: 100vh; /* ATUALIZADO (para mobile) */
+  min-height: 100vh;
   width: 100vw;
   overflow: hidden;
 }
@@ -74,7 +74,6 @@ body {
 .sidebar nav li {
   display: flex;
   align-items: center;
-  /* Alinhado à esquerda */
   gap: 12px;
   padding: 14px 12px;
   cursor: pointer;
@@ -91,14 +90,6 @@ body {
 .sidebar nav li.active {
   background-color: var(--color-sidebar-active);
   font-weight: 600;
-}
-
-.logout-button {
-  cursor: pointer;
-}
-
-.logout-button:hover {
-  background-color: #581c1c;
 }
 
 /* ======= Rodapé da Sidebar ======= */
@@ -164,19 +155,6 @@ body {
   flex: 1;
   color: var(--color-text-primary);
 }
-.main-content::-webkit-scrollbar {
-  width: 6px;
-}
-.main-content::-webkit-scrollbar-track {
-  background: var(--color-bg);
-}
-.main-content::-webkit-scrollbar-thumb {
-  background-color: #ccc;
-  border-radius: 6px;
-}
-.main-content::-webkit-scrollbar-thumb:hover {
-  background-color: #aaa;
-}
 .main-content h1 {
   font-size: 28px;
   font-weight: 700;
@@ -230,7 +208,7 @@ body {
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
-.appointment-card div {
+.card-info {
   flex: 1;
 }
 .appointment-card h4 {
@@ -248,7 +226,7 @@ body {
   font-size: 14px;
 }
 
-/* ======= BADGES DE STATUS (COM CORES) ======= */
+/* ======= BADGES DE STATUS ======= */
 .status-badge {
   font-size: 12px;
   padding: 6px 12px;
@@ -257,33 +235,34 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: white;
+  margin-bottom: 8px; /* Espaço entre o badge e os botões */
 }
-.status-confirmado {
-  background-color: var(--color-confirmado);
-  color: #fff;
-}
-.status-pendente {
-  background-color: var(--color-pendente);
-  color: #fff;
-}
-.status-cancelado {
-  background-color: var(--color-cancelado);
-  color: #fff;
-}
+.status-confirmado { background-color: var(--color-confirmado); }
+.status-pendente { background-color: var(--color-pendente); }
+.status-cancelado { background-color: var(--color-cancelado); }
 
-/* ======= ESTILOS DO BOTÃO WHATSAPP (COM TEXTO) ======= */
+/* ======= BOTÕES DE AÇÃO DO CARD ======= */
 .card-actions {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 12px;
+  /* Não usamos gap fixo aqui porque usamos margin-bottom no badge */
 }
+
+/* Wrapper para os botões ficarem lado a lado */
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Espaço entre WhatsApp e Lixeira */
+}
+
+/* Botão WhatsApp */
 .whatsapp-button {
   width: 180px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 12px;
+  padding: 8px 12px;
   border-radius: 6px;
   gap: 6px;
   font-size: 12px;
@@ -295,6 +274,8 @@ body {
   background-color: var(--color-surface);
   cursor: pointer;
   transition: all 0.2s;
+  height: 36px; /* Altura fixa para alinhar com o delete */
+  box-sizing: border-box;
 }
 .whatsapp-button:hover {
   background-color: var(--color-text-primary);
@@ -302,114 +283,51 @@ body {
   border-color: var(--color-text-primary);
 }
 
-/* ======== BOTÃO DE NOTIFICAÇÃO (Sino) ======== */
+/* Botão Delete */
+.delete-button {
+  height: 36px;
+  width: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: 1px solid #dc2626; /* Vermelho */
+  color: #dc2626;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 0;
+}
 
-/* O <li> que segura o botão de notificação */
+.delete-button:hover {
+  background-color: #dc2626;
+  color: white;
+}
+
+/* ======== BOTÃO DE NOTIFICAÇÃO ======== */
 .notification-item {
-  /* Remove o padding para o botão preencher */
   padding: 0 !important; 
-  /* O <li> ainda tem o hover, pois o botão o preenche */
   cursor: pointer;
 }
 .notification-item:hover {
   background-color: var(--color-sidebar-active) !important;
 }
-
-/* O botão (sino) em si */
 .notification-button {
   background: none;
   border: none;
   cursor: pointer;
-  
-  /* Faz o <button> se parecer com o <li> e preenchê-lo */
   display: flex;
   align-items: center;
-  gap: 12px;           /* Pega o gap do <li> */
-    padding-top: 14px;
-    padding-right: 0;
-    padding-bottom: 14px;
-    padding-left: 12px;  
-  /* Estilos de fonte/cor */
+  gap: 12px;
+  padding: 14px 12px;  
   color: var(--color-sidebar-text); 
-  font-family: var(--font-sans); /* Garante a fonte correta */
-  font-size: 1em; /* Garante o tamanho do texto */
-  font-weight: 400; /* Peso normal, <li> ativa terá 600 */
+  font-family: var(--font-sans);
+  font-size: 1em;
+  font-weight: 400;
+  width: 100%;
 }
-
-/* O botão fica transparente no hover (o <li> cuida do fundo) */
 .notification-button:hover {
    background-color: transparent;
-}
-
-
-/* Cor do sino quando desabilitado */
-.notification-button:disabled {
-  color: var(--color-sidebar-active); /* Cinza escuro, igual ao hover */
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-
-/* ======= NOVO: MODAL DE AVISO PERSONALIZADO ======= */
-.custom-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  font-family: var(--font-sans);
-}
-
-.custom-modal-content {
-  background-color: var(--color-surface);
-  color: var(--color-text-primary);
-  padding: 24px;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  width: 90%;
-  max-width: 320px;
-  text-align: center;
-}
-
-.custom-modal-content p {
-  margin-top: 0;
-  margin-bottom: 20px;
-  font-size: 16px;
-  line-height: 1.5;
-}
-
-.custom-modal-button {
-  background-color: var(--color-sidebar); /* Botão preto */
-  color: var(--color-sidebar-text); /* Texto branco */
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.2s;
-  width: 100%; /* Botão ocupa a largura total */
-}
-
-.custom-modal-button:hover {
-  opacity: 0.8;
-}
-/* ======= FIM DO MODAL ======= */
-
-
-/* ======= Rodapé do Conteúdo ======= */
-.main-footer {
-  padding: 16px 32px;
-  text-align: right;
-  font-size: 14px;
-  color: var(--color-text-muted);
-  background: var(--color-bg);
-  border-top: 1px solid var(--border-color);
 }
 
 /* ======= Responsivo ======= */
@@ -420,20 +338,15 @@ body {
 
   .sidebar {
     flex-direction: row;
-    justify-content: space-between; /* ATUALIZADO */
+    justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 10px 16px; /* Ajustado */
-    box-sizing: border-box;
-  }
-
-  .sidebar nav {
-    /* Removido o flex: 1 para o nav não se esticar */
+    padding: 10px 16px;
   }
 
   .sidebar nav ul {
     display: flex;
-    gap: 16px; /* Ajustado */
+    gap: 16px;
     margin-top: 0;
     align-items: center;
   }
@@ -441,92 +354,62 @@ body {
   .sidebar nav li {
     justify-content: center;
     padding: 10px;
-    gap: 0; /* Remove o gap no mobile */
+    gap: 0;
   }
-
-  /* Esconde o texto, mostra só o ícone */
-  .sidebar nav li span {
+  .sidebar nav li span, .notification-button span {
     display: none;
   }
-  
-  /* Esconde o <span> DENTRO do botão de notificação */
-  .notification-button span {
-    display: none;
-  }
-
-  /* Faz o sino (que não é um react-icon) se alinhar */
   .notification-item .notification-button {
-     font-size: 1.25em; /* Aumenta um pouco para bater com o react-icons */
-     
-     /* Reseta o padding no mobile para centralizar o ícone */
+     font-size: 1.25em;
      padding: 10px;
      gap: 0;
-     width: auto; /* Deixa o botão ter o tamanho do ícone */
+     width: auto;
   }
-
   .logo {
     margin: 0;
-    width: 140px; /* Um pouco menor */
+    width: 140px;
     order: -1;
   }
-
-  .sidebar-footer {
-    margin-top: 0;
-  }
-
   .main-content {
     padding: 24px;
   }
-
   .header {
-    padding: 16px 24px;
     display: none;
   }
-
-  .main-content h1 {
-    font-size: 20px;
-    margin-bottom: 24px;
-  }
-
   .section-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
   }
-
-  .section-header h2 {
-    font-size: 18px;
-  }
-
   .appointment-card {
     padding: 16px;
     align-items: flex-start;
   }
-
   .card-actions {
     flex-direction: column;
     align-items: flex-end;
     gap: 8px;
   }
-
   .status-badge {
     margin-left: 0;
+    margin-bottom: 0;
   }
-
+  
+  /* Ajuste Mobile: Botões redondos */
   .whatsapp-button {
-    width: 34px;
-    height: 34px;
+    width: 36px; /* Quadrado/Redondo */
+    height: 36px;
     padding: 0;
     border-radius: 50%;
   }
-
   .whatsapp-button span {
     display: none;
   }
-
-  .main-footer {
-    position: static;
-    text-align: center;
-    padding: 16px 24px;
+  
+  /* Botão delete também vira redondo no mobile */
+  .delete-button {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
   }
 }

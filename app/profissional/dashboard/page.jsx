@@ -1,4 +1,4 @@
-"use client"; // <-- CORREÇÃO: Adicionado no topo
+"use client";
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -16,9 +16,7 @@ export default function Dashboard() {
     const fetchAppointments = async () => {
       try {
         setLoading(true);
-        // Agora esta rota GET vai funcionar e trazer os dados completos
-        const response = await axios.get("/api/agendamentos"); 
-        
+        const response = await axios.get("/api/agendamentos");
         setAppointments(response.data);
         setError(null);
       } catch (err) {
@@ -31,6 +29,24 @@ export default function Dashboard() {
 
     fetchAppointments();
   }, []);
+
+  // Função para deletar um agendamento
+  const handleDelete = async (id) => {
+    try {
+      // 1. Chamada para API
+      // Certifique-se que sua API suporta o método DELETE nesta rota
+      await axios.delete(`/api/agendamentos/${id}`);
+
+      // 2. Atualiza o estado local removendo o item deletado
+      setAppointments((prevAppointments) => 
+        prevAppointments.filter((appointment) => appointment._id !== id)
+      );
+
+    } catch (err) {
+      console.error("Erro ao excluir agendamento:", err);
+      alert("Erro ao excluir o agendamento. Tente novamente.");
+    }
+  };
 
   return (
     <div className="dashboard-container">
@@ -54,10 +70,12 @@ export default function Dashboard() {
               {appointments.length === 0 ? (
                 <p>Nenhum agendamento encontrado.</p>
               ) : (
-                // Ajustamos as props enviadas para o AppointmentCard
-                // Passamos o objeto 'a' (agendamento) inteiro
                 appointments.map((a) => (
-                  <AppointmentCard key={a._id} appointment={a} />
+                  <AppointmentCard 
+                    key={a._id} 
+                    appointment={a} 
+                    onDelete={handleDelete} // Passando a função de deletar
+                  />
                 ))
               )}
             </div>
