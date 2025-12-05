@@ -1,35 +1,36 @@
-import connectMongoDB from '../../lib/mongodb';
-import Agendamento from '../../models/Agendamento';
 import { NextResponse } from 'next/server';
-import { enviarWhatsApp } from '../../lib/whatsapp'; 
-
-// --- 1. IMPORTS PARA NOTIFICAÇÃO PUSH ---
+import connectMongoDB from '@/lib/mongodb'; // Certifique-se que o caminho @/ funciona (ou use ../../)
+import Agendamento from '@/models/Agendamento';
+import Subscription from '@/models/Subscription'; 
+import { enviarWhatsApp } from '@/lib/whatsapp'; 
 import webpush from 'web-push';
-import Subscription from '../../models/Subscription'; // Modelo de Inscrição
 
-// --- 2. CONFIGURAR WEB-PUSH (fora das funções) ---
-// As chaves devem estar no .env.local
+// --- CONFIGURAÇÃO WEB-PUSH ---
+// É recomendável mover essas chaves para variáveis de ambiente, mas se já estiverem no .env.local, ok.
+if (!process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY || !process.env.VAPID_PRIVATE_KEY) {
+  console.warn("AVISO: Chaves VAPID não configuradas no .env.local");
+}
+
 webpush.setVapidDetails(
-  'mailto:gustavorms1916@gmail.com', // MUDE AQUI: Obrigatório pelo protocolo VAPID (apenas contato)
+  'mailto:gustavorms1916@gmail.com', 
   process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
   process.env.VAPID_PRIVATE_KEY
 );
 
 /**
  * GET: Busca TODOS os agendamentos para o Dashboard.
- * (Sua função original - Está correta)
  */
 export async function GET() {
   try {
     await connectMongoDB();
 
-    const agendamentos = await Agendamento.find({})
-      .sort({ dataHora: -1 }); 
+    // Busca e ordena do mais recente para o mais antigo
+    const agendamentos = await Agendamento.find({}).sort({ dataHora: -1 }); 
 
     return NextResponse.json(agendamentos, { status: 200 });
 
   } catch (error) {
-    console.error('Erro ao buscar agendamentos para o dashboard:', error);
+    console.error('Erro ao buscar agendamentos:', error);
     return NextResponse.json(
       { message: 'Erro ao buscar agendamentos.' },
       { status: 500 }
@@ -38,73 +39,82 @@ export async function GET() {
 }
 
 /**
- * POST: Cria um novo agendamento, envia WhatsApp E envia Notificação Push.
- * (Função ATUALIZADA)
+ * POST: Cria agendamento + WhatsApp + Notificação Push
  */
 export async function POST(request) { 
   try {
-    // 1. Pega os dados do formulário
     const body = await request.json();
-    // Certifique-se de que o 'service' (serviço) está sendo enviado pelo frontend
     const { nome, whatsapp, dataHora, service } = body; 
 
-    // 2. Validação básica
+    // 1. Validação básica
     if (!nome || !whatsapp || !dataHora || !service) {
-      return NextResponse.json({ message: 'Dados incompletos (nome, whatsapp, data, serviço).' }, { status: 400 });
+      return NextResponse.json(
+        { message: 'Dados incompletos (nome, whatsapp, data ou serviço faltando).' }, 
+        { status: 400 }
+      );
     }
 
-    // 3. Conecta ao banco de dados
     await connectMongoDB();
 
-    // 4. Salva o novo agendamento no MongoDB
+    // 2. Cria o Agendamento
     const novoAgendamento = await Agendamento.create({
       nome,
       whatsapp,
       dataHora: new Date(dataHora),
-      service, // Salva o serviço
+      service, 
       status: 'confirmado' 
     });
 
-    // 5. ENVIA A CONFIRMAÇÃO AUTOMÁTICA (WHATSAPP)
-    await enviarWhatsApp(
+    // 3. Dispara WhatsApp (sem await para não travar a resposta se demorar)
+    // Se precisar garantir o envio, coloque 'await', mas isso deixa a UI mais lenta.
+    enviarWhatsApp(
       'confirmacao',
       novoAgendamento.nome,
       novoAgendamento.whatsapp,
       novoAgendamento.dataHora 
-    );
+    ).catch(err => console.error("Erro ao enviar WhatsApp:", err));
 
-    // --- 6. INÍCIO - ENVIAR NOTIFICAÇÃO PUSH ---
+    // 4. Dispara Notificações Push
+    // Envolvemos em try/catch para garantir que o agendamento seja retornado mesmo se o push falhar
     try {
-      // 6.1. Busca todas as inscrições do banco
       const subscriptions = await Subscription.find({});
       
-      // 6.2. Define o payload (o que a notificação vai dizer)
       const payload = JSON.stringify({
-        title: 'Novo Agendamento!',
-        body: `${novoAgendamento.nome} agendou: ${novoAgendamento.service}.`,
+        title: 'Novo Agendamento! 📅',
+        body: `${novoAgendamento.nome} agendou ${novoAgendamento.service}.`,
+        // Você pode adicionar uma URL aqui se quiser que ao clicar vá para o dashboard
+        data: { url: '/dashboard' } 
       });
 
-      // 6.3. Cria uma lista de promessas de envio
-      const promises = subscriptions.map(sub => 
-        webpush.sendNotification(sub.toObject(), payload)
-      );
+      // Mapeia os envios individualmente para tratar erros de inscrição inválida (ex: usuário limpou cache)
+      const pushPromises = subscriptions.map(async (sub) => {
+        try {
+          await webpush.sendNotification(sub, payload);
+        } catch (err) {
+          // Se o erro for 410 (Gone) ou 404 (Not Found), a inscrição não existe mais. Devemos deletar.
+          if (err.statusCode === 410 || err.statusCode === 404) {
+            console.log(`Removendo inscrição inválida: ${sub._id}`);
+            await Subscription.findByIdAndDelete(sub._id);
+          } else {
+            console.error('Erro ao enviar push para uma inscrição:', err);
+          }
+        }
+      });
       
-      // 6.4. Envia todas as notificações em paralelo
-      await Promise.all(promises);
+      // Aguarda todos os disparos (sem travar se um falhar)
+      await Promise.all(pushPromises);
 
     } catch (pushError) {
-      // Se o envio do PUSH falhar, não quebra a requisição principal
-      console.error('Erro ao enviar notificação push:', pushError);
+      console.error('Erro geral no sistema de Push:', pushError);
     }
-    // --- 6. FIM - ENVIAR NOTIFICAÇÃO PUSH ---
 
-    // 7. Retorna o agendamento criado com sucesso
+    // 5. Retorna sucesso
     return NextResponse.json(novoAgendamento, { status: 201 });
 
   } catch (error) {
     console.error('Erro ao criar agendamento:', error);
     return NextResponse.json(
-      { message: 'Erro ao criar agendamento.' },
+      { message: 'Erro interno ao processar agendamento.' },
       { status: 500 }
     );
   }
