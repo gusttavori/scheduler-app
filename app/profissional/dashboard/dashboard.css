@@ -313,19 +313,29 @@ body {
   background-color: var(--color-sidebar-active) !important;
 }
 .notification-button {
+  /* Reset básico de botão */
   background: none;
   border: none;
   cursor: pointer;
+  
+  /* Layout Flex para alinhar ícone e texto */
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 14px 12px;  
+  justify-content: flex-start; /* <--- O SEGREDO: Força o alinhamento à esquerda */
+  
+  /* Espaçamento idêntico aos outros itens da sidebar */
+  width: 100%;
+  gap: 12px;           /* Distância entre o sino e o texto */
+  padding: 14px 12px;  /* Mesma margem interna dos outros itens */
+  
+  /* Estilos de Texto */
+  text-align: left;
   color: var(--color-sidebar-text); 
   font-family: var(--font-sans);
-  font-size: 1em;
+  font-size: 1em; /* Herda o tamanho correto */
   font-weight: 400;
-  width: 100%;
 }
+
 .notification-button:hover {
    background-color: transparent;
 }
